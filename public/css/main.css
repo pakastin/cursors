@@ -1,4 +1,8 @@
 
+body {
+  overflow: hidden;
+}
+
 .cursor {
   position: fixed;
   top: calc(50% - .5rem);
