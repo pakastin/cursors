@@ -1,0 +1,13 @@
+
+.cursor {
+  position: fixed;
+  top: calc(50% - .5rem);
+  left: calc(50% - .5rem);
+}
+.cursor.fadeout {
+  transition: opacity .5s;
+  opacity: 0;
+}
+.fa.fa-hand-rock-o {
+  top: calc(50% - .5rem + 1px);
+}
