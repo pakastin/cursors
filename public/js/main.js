@@ -39,7 +39,7 @@
   });
 
   window.addEventListener('touchstart', function (e) {
-    pressed = true;
+    pressed = false;
     sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
   });
 
