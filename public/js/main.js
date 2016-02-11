@@ -37,6 +37,8 @@
   window.addEventListener('touchstart', onMousedown);
 
   function onMousedown (e) {
+    e.preventDefault();
+
     if (e.type === 'touchstart') {
       pressed = false;
 
