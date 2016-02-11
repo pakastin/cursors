@@ -33,33 +33,48 @@
 
   var pressed = false;
 
-  window.addEventListener('mousedown', function (e) {
-    e.preventDefault();
-    pressed = true;
-    sendMouse({x: e.pageX, y: e.pageY});
-  });
+  window.addEventListener('mousedown', onMousedown);
+  window.addEventListener('touchstart', onMousedown);
 
-  window.addEventListener('touchstart', function (e) {
+  function onMousedown (e) {
+    if (e.type === 'touchstart') {
+      pressed = false;
+
+      sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
+
+      window.addEventListener('touchmove', onMousemove);
+      window.addEventListener('touchend', onMouseup);
+    } else {
+      pressed = true;
+
+      sendMouse({x: e.pageX, y: e.pageY});
+
+      window.addEventListener('mousemove', onMousemove);
+      window.addEventListener('mouseup', onMouseup);
+    }
+  }
+
+  function onMousemove (e) {
+    if (e.type === 'touchmove') {
+      sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
+    } else {
+      sendMouse({x: e.pageX, y: e.pageY});
+    }
+  };
+
+  function onMouseup (e) {
     pressed = false;
-    sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
-  });
+    if (e.type === 'touchend') {
+      window.removeEventListener('touchmove', onMousemove);
+      window.removeEventListener('touchend', onMouseup);
 
-  window.addEventListener('mouseup', function (e) {
-    pressed = false;
-    sendMouse({x: e.pageX, y: e.pageY});
-  });
+      sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
+    } else {
+      window.removeEventListener('touchmove', onMousemove);
+      window.removeEventListener('touchend', onMouseup);
 
-  window.addEventListener('touchend', function (e) {
-    pressed = false;
-    sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
-  });
-
-  window.addEventListener('mousemove', function (e) {
-    sendMouse({x: e.pageX, y: e.pageY});
-  });
-
-  window.addEventListener('touchmove', function (e) {
-    sendMouse({x: e.touches[0].pageX, y: e.touches[0].pageY});
+      sendMouse({x: e.pageX, y: e.pageY});
+    }
   });
 
   function sendMouse (data) {
