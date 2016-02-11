@@ -34,6 +34,7 @@
   var pressed = false;
 
   window.addEventListener('mousedown', function (e) {
+    e.preventDefault();
     pressed = true;
     sendMouse({x: e.pageX, y: e.pageY});
   });
