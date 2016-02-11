@@ -75,7 +75,7 @@
 
       sendMouse({x: e.pageX, y: e.pageY});
     }
-  });
+  };
 
   function sendMouse (data) {
     socket.emit('mouse', {
