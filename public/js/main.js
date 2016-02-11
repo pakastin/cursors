@@ -25,6 +25,9 @@
   });
 
   socket.on('leave', function (id) {
+    if (!cursors[id]) {
+      return;
+    }
     cursors[id].classList.add('fadeout');
     setTimeout(function () {
       document.body.removeChild(cursors[id]);
